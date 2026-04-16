@@ -79,7 +79,10 @@
     .hframe{position:relative;width:380px;height:430px}
     .hblobg{position:absolute;width:340px;height:385px;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;background:linear-gradient(135deg,var(--steel-l) 0%,var(--border) 100%);top:20px;left:20px;animation:morph 8s ease-in-out infinite}
     @keyframes morph{0%,100%{border-radius:30% 70% 70% 30%/30% 30% 70% 70%}50%{border-radius:70% 30% 30% 70%/70% 70% 30% 30%}}
-    .hphoto{position:absolute;top:0;left:0;width:340px;height:385px;border-radius:24px;object-fit:cover;object-position:top center;box-shadow:0 24px 60px var(--shadow);filter:contrast(1.02) saturate(1.05)}
+    .hphoto{position:absolute;top:0;left:0;width:340px;
+  height: 290px;              
+  object-position: 50% 8%;   
+border-radius:24px;object-fit:cover;box-shadow:0 24px 60px var(--shadow);filter:contrast(1.02) saturate(1.05)}
     .haccent{position:absolute;bottom:-10px;right:-10px;width:80px;height:80px;border-radius:50%;background:var(--wine);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(139,38,53,.4);font-family:'Playfair Display',serif;font-size:1rem;color:#fff;font-style:italic;animation:fl1 5s ease-in-out infinite}
 
     @keyframes fup{to{opacity:1;transform:translateY(0)}}
