@@ -79,19 +79,19 @@
     .hframe{position:relative;width:380px;height:430px}
     .hblobg{position:absolute;width:340px;height:385px;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;background:linear-gradient(135deg,var(--steel-l) 0%,var(--border) 100%);top:20px;left:20px;animation:morph 8s ease-in-out infinite}
     @keyframes morph{0%,100%{border-radius:30% 70% 70% 30%/30% 30% 70% 70%}50%{border-radius:70% 30% 30% 70%/70% 70% 30% 30%}}
-    .hphoto {
+   .hphoto {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 320px;
-  height: 140px; /* 👈 قللنا الارتفاع عشان نقص من تحت */
-
+  height: 210px;
   object-fit: cover;
-  object-position: top; /* 👈 يخلي التركيز فوق مش في النص */
-
+  object-position: top center;
   border-radius: 24px;
   box-shadow: 0 24px 60px var(--shadow);
   filter: contrast(1.02) saturate(1.05);
+  z-index: 2;
 }
     .haccent{position:absolute;bottom:-10px;right:-10px;width:80px;height:80px;border-radius:50%;background:var(--wine);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(139,38,53,.4);font-family:'Playfair Display',serif;font-size:1rem;color:#fff;font-style:italic;animation:fl1 5s ease-in-out infinite}
 
