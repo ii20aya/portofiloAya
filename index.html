@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aya Abdulaziz — Full Stack .NET Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#F5F3EE; --bg2:#EDEAE2; --surface:#FFFFFF; --surface2:#F0EDE6;
+      --navy:#1C2E50; --navy2:#2A4070; --steel:#4A7FA5; --steel-l:#A8C4D8;
+      --wine:#8B2635; --wine-l:#B54A5A;
+      --text:#1C2E50; --text2:#4A5F7A; --text3:#7A90A8;
+      --border:#D4DCEA; --shadow:rgba(28,46,80,.12); --shadow2:rgba(28,46,80,.06);
+      --tag-bg:#E8EFF7; --tag-text:#2A4070;
+      --tr:0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    [data-theme="dark"] {
+      --bg:#0D1521; --bg2:#0A1018; --surface:#162235; --surface2:#1E3048;
+      --navy:#D8E6F5; --navy2:#B0CBE5; --steel:#70AECC; --steel-l:#3A607A;
+      --wine:#D0687A; --wine-l:#F08898;
+      --text:#E2EBF7; --text2:#8AAFC8; --text3:#4A7090;
+      --border:#1E3450; --shadow:rgba(0,0,0,.4); --shadow2:rgba(0,0,0,.2);
+      --tag-bg:#1A3250; --tag-text:#7AB0CF;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);transition:background var(--tr),color var(--tr);overflow-x:hidden}
+    ::selection{background:var(--wine);color:#fff}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--steel);border-radius:2px}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 3rem;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px) saturate(1.8);background:rgba(245,243,238,.7);border-bottom:1px solid var(--border);transition:background var(--tr)}
+    [data-theme="dark"] nav{background:rgba(13,21,33,.85)}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--navy);text-decoration:none;letter-spacing:-.02em}
+    .nav-logo span{color:var(--wine)}
+    .nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+    .nav-links a{font-size:.875rem;font-weight:500;letter-spacing:.04em;color:var(--text2);text-decoration:none;text-transform:uppercase;position:relative;transition:color .3s}
+    .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:var(--wine);transition:width .3s}
+    .nav-links a:hover{color:var(--wine)}.nav-links a:hover::after{width:100%}
+    .theme-btn{width:48px;height:26px;background:var(--surface2);border:1.5px solid var(--border);border-radius:13px;cursor:pointer;position:relative;transition:background var(--tr)}
+    .theme-btn::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--steel);transition:transform var(--tr),background var(--tr);box-shadow:0 2px 6px var(--shadow)}
+    [data-theme="dark"] .theme-btn::after{transform:translateX(22px);background:var(--wine)}
+
+    /* SCROLL BAR */
+    .sprogress{position:fixed;top:0;left:0;height:2.5px;z-index:999;background:linear-gradient(90deg,var(--wine),var(--steel));width:0;transition:width .1s}
+
+    /* HERO */
+    #hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:8rem 6rem 4rem;gap:4rem;position:relative;z-index:1;overflow:hidden}
+    .hbg{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+    .hbg1{width:620px;height:620px;background:radial-gradient(circle,rgba(74,127,165,.14) 0%,transparent 70%);top:-200px;right:-100px;animation:fl1 8s ease-in-out infinite}
+    .hbg2{width:420px;height:420px;background:radial-gradient(circle,rgba(139,38,53,.09) 0%,transparent 70%);bottom:0;left:-100px;animation:fl2 10s ease-in-out infinite}
+    @keyframes fl1{0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,30px)}}
+    @keyframes fl2{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-20px)}}
+    .hcontent{position:relative;z-index:1}
+    .hbadge{display:inline-flex;align-items:center;gap:.5rem;background:var(--tag-bg);border:1px solid var(--border);border-radius:100px;padding:.35rem 1rem;font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--steel);margin-bottom:1.5rem;opacity:0;transform:translateY(20px);animation:fup .6s .2s forwards}
+    .hbadge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--wine);box-shadow:0 0 8px var(--wine);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .hname{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.2rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;color:var(--navy);margin-bottom:.5rem;opacity:0;transform:translateY(25px);animation:fup .7s .35s forwards}
+    .hname em{font-style:italic;color:var(--wine);display:block}
+    .hrole{font-size:1.1rem;font-weight:300;color:var(--text2);letter-spacing:.02em;margin-bottom:2rem;opacity:0;transform:translateY(20px);animation:fup .7s .5s forwards;min-height:1.8rem}
+    .cursor{display:inline-block;width:2px;height:1.1em;background:var(--steel);margin-left:2px;vertical-align:text-bottom;animation:blink 1s infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+    .hdesc{font-size:1rem;line-height:1.8;color:var(--text2);max-width:480px;margin-bottom:2.5rem;opacity:0;transform:translateY(20px);animation:fup .7s .65s forwards}
+    .hctas{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;transform:translateY(20px);animation:fup .7s .8s forwards}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.8rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;text-decoration:none;transition:all .25s;cursor:pointer;border:none}
+    .btn-p{background:var(--navy);color:#fff;box-shadow:0 4px 20px var(--shadow)}
+    .btn-p:hover{background:var(--wine);transform:translateY(-2px);box-shadow:0 8px 28px var(--shadow)}
+    .btn-o{background:transparent;color:var(--text);border:1.5px solid var(--border)}
+    .btn-o:hover{border-color:var(--steel);color:var(--steel);transform:translateY(-2px)}
+    .hstats{display:flex;gap:2rem;margin-top:3rem;opacity:0;transform:translateY(20px);animation:fup .7s 1s forwards}
+    .hstat .num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--navy);line-height:1}
+    .hstat .num span{color:var(--wine)}
+    .hstat .lbl{font-size:.78rem;color:var(--text3);margin-top:.3rem;text-transform:uppercase;letter-spacing:.06em}
+    .himg{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;opacity:0;transform:scale(.95);animation:scIn .9s .4s forwards}
+    @keyframes scIn{to{opacity:1;transform:scale(1)}}
+    .hframe{position:relative;width:380px;height:430px}
+    .hblobg{position:absolute;width:340px;height:385px;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;background:linear-gradient(135deg,var(--steel-l) 0%,var(--border) 100%);top:20px;left:20px;animation:morph 8s ease-in-out infinite}
+    @keyframes morph{0%,100%{border-radius:30% 70% 70% 30%/30% 30% 70% 70%}50%{border-radius:70% 30% 30% 70%/70% 70% 30% 30%}}
+    .hphoto{position:absolute;top:0;left:0;width:340px;height:385px;border-radius:24px;object-fit:cover;object-position:top center;box-shadow:0 24px 60px var(--shadow);filter:contrast(1.02) saturate(1.05)}
+    .haccent{position:absolute;bottom:-10px;right:-10px;width:80px;height:80px;border-radius:50%;background:var(--wine);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(139,38,53,.4);font-family:'Playfair Display',serif;font-size:1rem;color:#fff;font-style:italic;animation:fl1 5s ease-in-out infinite}
+
+    @keyframes fup{to{opacity:1;transform:translateY(0)}}
+
+    /* SECTIONS */
+    section{padding:6rem 6rem;position:relative;z-index:1}
+    .slabel{font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--wine);margin-bottom:.8rem;display:flex;align-items:center;gap:.8rem}
+    .slabel::after{content:'';flex:1;max-width:60px;height:1px;background:var(--wine);opacity:.5}
+    .stitle{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:700;letter-spacing:-.02em;color:var(--navy);line-height:1.2;margin-bottom:1rem}
+    .stitle em{font-style:italic;color:var(--wine)}
+    hr.div{border:none;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:0}
+
+    /* ABOUT */
+    #about{background:var(--surface)}
+    .agrid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:start;margin-top:3rem}
+    .atext p{font-size:1.05rem;line-height:1.9;color:var(--text2);margin-bottom:1.2rem}
+    .atext strong{color:var(--navy);font-weight:600}
+    .ahighlights{display:flex;flex-direction:column;gap:1.2rem}
+    .hcard{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;transition:all .3s}
+    .hcard:hover{border-color:var(--steel);transform:translateX(4px)}
+    .hicon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+    .blue{background:rgba(74,127,165,.15)}.wine-bg{background:rgba(139,38,53,.12)}.green{background:rgba(50,150,100,.12)}
+    .hinfo .ht{font-weight:600;font-size:.95rem;color:var(--navy);margin-bottom:.2rem}
+    .hinfo .hs{font-size:.83rem;color:var(--text3)}
+
+    /* EXPERIENCE */
+    #experience{background:var(--bg)}
+    .timeline{position:relative;margin-top:3rem;padding-left:2rem}
+    .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1.5px;background:linear-gradient(to bottom,var(--wine),var(--steel),transparent)}
+    .eitem{position:relative;padding-left:2.5rem;margin-bottom:3rem}
+    .eitem::before{content:'';position:absolute;left:-2.45rem;top:.4rem;width:10px;height:10px;border-radius:50%;background:var(--wine);box-shadow:0 0 0 3px var(--bg),0 0 0 5px rgba(139,38,53,.3)}
+    .emeta{display:flex;align-items:center;gap:.8rem;margin-bottom:.6rem;flex-wrap:wrap}
+    .eco{font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--steel)}
+    .eper{font-size:.8rem;color:var(--text3);font-family:'JetBrains Mono',monospace}
+    .etype{font-size:.72rem;padding:.2rem .6rem;border-radius:100px;background:var(--tag-bg);color:var(--tag-text);border:1px solid var(--border)}
+    .erole{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:var(--navy);margin-bottom:.8rem}
+    .ebullets{list-style:none}
+    .ebullets li{font-size:.93rem;line-height:1.7;color:var(--text2);padding-left:1.2rem;position:relative;margin-bottom:.4rem}
+    .ebullets li::before{content:'→';position:absolute;left:0;color:var(--wine);font-size:.85rem}
+
+    /* PROJECTS */
+    #projects{background:var(--surface)}
+    .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.8rem;margin-top:3rem}
+    .pcard{background:var(--bg);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:all .35s;cursor:pointer;position:relative}
+    .pcard:hover{border-color:var(--steel);transform:translateY(-6px);box-shadow:0 20px 50px var(--shadow)}
+    .pch{padding:1.6rem 1.6rem 1rem;display:flex;align-items:flex-start;justify-content:space-between}
+    .picon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+    .pgrade{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;padding:.25rem .6rem;border-radius:6px;color:#fff}
+    .ga{background:#2D8C5A}.gb{background:var(--steel)}
+    .pcb{padding:0 1.6rem 1.6rem}
+    .pname{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;color:var(--navy);margin-bottom:.5rem;line-height:1.3}
+    .pdesc{font-size:.88rem;line-height:1.7;color:var(--text2);margin-bottom:1.2rem}
+    .ptags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.2rem}
+    .tag{font-size:.72rem;font-weight:500;background:var(--tag-bg);color:var(--tag-text);border:1px solid var(--border);padding:.25rem .65rem;border-radius:100px;letter-spacing:.03em}
+    .pcf{padding:.9rem 1.6rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .plink{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:500;color:var(--steel);text-decoration:none;transition:color .2s,gap .2s}
+    .plink:hover{color:var(--wine);gap:.7rem}
+
+    /* MODAL */
+    .moverlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+    .moverlay.open{opacity:1;pointer-events:all}
+    .modal{background:var(--surface);border-radius:24px;border:1px solid var(--border);max-width:600px;width:90%;max-height:85vh;overflow-y:auto;padding:2.5rem;transform:scale(.95) translateY(20px);transition:transform .3s;box-shadow:0 30px 80px rgba(0,0,0,.25);position:relative}
+    .moverlay.open .modal{transform:scale(1) translateY(0)}
+    .mclose{position:absolute;top:1.2rem;right:1.5rem;background:none;border:none;cursor:pointer;font-size:1.5rem;color:var(--text3);transition:color .2s;line-height:1}
+    .mclose:hover{color:var(--wine)}
+    .modal h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--navy);margin-bottom:1.5rem}
+    .mst{font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--wine);margin-bottom:.6rem;margin-top:1.4rem}
+    .modal p{font-size:.93rem;line-height:1.8;color:var(--text2);margin-bottom:1rem}
+    .mlinks{display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+
+    /* SKILLS */
+    #skills{background:var(--bg)}
+    .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;margin-top:3rem}
+    .sgroup{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:1.6rem;transition:all .3s}
+    .sgroup:hover{border-color:var(--steel);box-shadow:0 8px 30px var(--shadow2)}
+    .sgh{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+    .sgicon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+    .blue2{background:rgba(74,127,165,.15)}.wine2{background:rgba(139,38,53,.12)}.purple{background:rgba(100,80,160,.12)}.green2{background:rgba(40,140,100,.12)}
+    .sgt{font-weight:600;font-size:.95rem;color:var(--navy)}
+    .spills{display:flex;flex-wrap:wrap;gap:.4rem}
+    .spill{font-size:.78rem;font-family:'JetBrains Mono',monospace;background:var(--tag-bg);color:var(--tag-text);border:1px solid var(--border);padding:.3rem .7rem;border-radius:6px;transition:all .2s}
+    .spill:hover{background:var(--steel);color:#fff;border-color:var(--steel);transform:translateY(-1px)}
+
+    /* CONTACT */
+    #contact{background:var(--surface);text-align:center}
+    .cinner{max-width:700px;margin:0 auto}
+    .cinner .slabel{justify-content:center}.cinner .slabel::after{display:none}
+    .cdesc{font-size:1.05rem;line-height:1.8;color:var(--text2);margin:1.5rem 0 3rem}
+    .sgrid2{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:3rem}
+    .slink{display:flex;align-items:center;gap:.7rem;padding:.8rem 1.6rem;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;text-decoration:none;color:var(--text);font-size:.9rem;font-weight:500;transition:all .25s}
+    .slink:hover{border-color:var(--steel);color:var(--steel);transform:translateY(-3px);box-shadow:0 8px 24px var(--shadow2)}
+    .cemail{font-family:'JetBrains Mono',monospace;font-size:1.2rem;color:var(--wine);text-decoration:none;position:relative}
+    .cemail::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1.5px;background:var(--wine);transform:scaleX(0);transition:transform .3s}
+    .cemail:hover::after{transform:scaleX(1)}
+
+    /* FOOTER */
+    footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;padding:2rem;font-size:.83rem;letter-spacing:.04em;position:relative;z-index:1}
+    [data-theme="dark"] footer{background:var(--bg2)}
+    footer span{color:var(--wine)}
+
+    /* REVEAL ANIMATIONS */
+    .reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-l{opacity:0;transform:translateX(-40px);transition:opacity .7s ease,transform .7s ease}
+    .reveal-l.visible{opacity:1;transform:translateX(0)}
+    .reveal-r{opacity:0;transform:translateX(40px);transition:opacity .7s ease,transform .7s ease}
+    .reveal-r.visible{opacity:1;transform:translateX(0)}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem}.nav-links{display:none}
+      #hero{grid-template-columns:1fr;padding:7rem 1.5rem 4rem;text-align:center}
+      .himg{order:-1}.hctas{justify-content:center}.hstats{justify-content:center}
+      .hdesc{margin:0 auto 2.5rem}
+      .hframe{width:260px;height:295px}.hblobg,.hphoto{width:240px;height:275px}
+      .haccent{width:56px;height:56px;font-size:.85rem}
+      section{padding:4rem 1.5rem}
+      .agrid{grid-template-columns:1fr;gap:2.5rem}
+      .pgrid{grid-template-columns:1fr}
+      .sgrid{grid-template-columns:1fr}
+      .sgrid2{flex-direction:column;align-items:center}
+    }
+  </style>
+</head>
+<body>
+
+<div class="sprogress" id="sp"></div>
+
+<nav>
+  <a href="#hero" class="nav-logo">Aya<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"></button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hbg hbg1"></div>
+  <div class="hbg hbg2"></div>
+  <div class="hcontent">
+    <div class="hbadge">Available for opportunities</div>
+    <h1 class="hname">Aya <em>Abdulaziz</em></h1>
+    <div class="hrole"><span id="tw"></span><span class="cursor"></span></div>
+    <p class="hdesc">Full Stack .NET &amp; Angular Engineer building scalable, clean-architecture web systems. Passionate about real-time applications, elegant APIs, and bringing ideas to life through code.</p>
+    <div class="hctas">
+      <a href="#projects" class="btn btn-p">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+        View Projects
+      </a>
+      <a href="#contact" class="btn btn-o">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Get in Touch
+      </a>
+    </div>
+    <div class="hstats">
+      <div class="hstat"><div class="num">1<span>+</span></div><div class="lbl">Years Exp.</div></div>
+      <div class="hstat"><div class="num">6<span>+</span></div><div class="lbl">Projects</div></div>
+      <div class="hstat"><div class="num">3<span>.</span>5</div><div class="lbl">GPA</div></div>
+    </div>
+  </div>
+  <div class="himg">
+    <div class="hframe">
+      <div class="hblobg"></div>
+      <img src="aya.jpg" alt="Aya Abdulaziz" class="hphoto" />
+      <div class="haccent">.NET</div>
+    </div>
+  </div>
+</section>
+
+<hr class="div" />
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="slabel reveal">About Me</div>
+  <h2 class="stitle reveal">Crafting Digital <em>Experiences</em></h2>
+  <div class="agrid">
+    <div class="atext reveal-l">
+      <p>I'm a <strong>Full Stack .NET Developer</strong> based in Cairo, Egypt, with a strong passion for building clean, scalable, and performant web applications. I graduated with <strong>Distinction (GPA 3.5, 3rd in class)</strong> from Beni Suef University in Computer Science and completed an intensive <strong>6-month ITI Full Stack .NET program</strong>.</p>
+      <p>My expertise spans <strong>ASP.NET Core Web API</strong>, <strong>Angular</strong>, and <strong>SQL Server</strong>, with deep experience in Clean Architecture, SOLID principles, JWT authentication, and real-time systems via SignalR. I also bring hands-on exposure to <strong>Rust, IoT (Raspberry Pi &amp; ESP32)</strong>, Docker, and CI/CD pipelines.</p>
+      <p>Beyond writing code, I thrive in Agile teams — contributing to sprint planning, code reviews, and cross-functional collaboration. I'm a continuous learner who loves tackling complex problems with elegant solutions.</p>
+      <div class="hctas" style="margin-top:1.5rem">
+        <a href="mailto:dann742003@gmail.com" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">📧 Email Me</a>
+        <a href="https://www.linkedin.com/in/aya-abdulaziz" target="_blank" class="btn btn-o" style="font-size:.85rem;padding:.65rem 1.4rem">💼 LinkedIn</a>
+      </div>
+    </div>
+    <div class="ahighlights reveal-r">
+      <div class="hcard"><div class="hicon blue">🎓</div><div class="hinfo"><div class="ht">Computer Science — BSU</div><div class="hs">GPA 3.5 · 3rd in Class · Excellent</div></div></div>
+      <div class="hcard"><div class="hicon wine-bg">🏫</div><div class="hinfo"><div class="ht">ITI Full Stack .NET — Intensive</div><div class="hs">6-Month Professional Track</div></div></div>
+      <div class="hcard"><div class="hicon green">📍</div><div class="hinfo"><div class="ht">Cairo, Egypt</div><div class="hs">Open to Remote &amp; Relocation</div></div></div>
+      <div class="hcard"><div class="hicon blue">🌐</div><div class="hinfo"><div class="ht">Languages</div><div class="hs">Arabic (Native) · English (C1)</div></div></div>
+      <div class="hcard"><div class="hicon wine-bg">⚡</div><div class="hinfo"><div class="ht">Specializations</div><div class="hs">Real-time Systems · Clean Architecture · APIs</div></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="div" />
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="slabel reveal">Career</div>
+  <h2 class="stitle reveal">Work <em>Experience</em></h2>
+  <div class="timeline">
+    <div class="eitem reveal">
+      <div class="emeta"><span class="eco">JBR</span><span class="eper">Jun 2025 – Sep 2025</span><span class="etype">Full-Time · Onsite</span></div>
+      <div class="erole">.NET Developer</div>
+      <ul class="ebullets">
+        <li>Developed and maintained scalable RESTful APIs using ASP.NET Core Web API consumed by Angular frontend.</li>
+        <li>Implemented JWT authentication and role-based access control; optimized SQL Server queries via stored procedures and indexing.</li>
+        <li>Applied Clean Architecture and SOLID principles in an Agile/Scrum team; contributed to sprint planning and code reviews.</li>
+      </ul>
+    </div>
+    <div class="eitem reveal">
+      <div class="emeta"><span class="eco">Corelia</span><span class="eper">Oct 2024 – May 2025</span><span class="etype">Part-Time · Hybrid</span></div>
+      <div class="erole">Rust Developer</div>
+      <ul class="ebullets">
+        <li>Built systems-level components in Rust, applying ownership, concurrency, and performance optimization patterns.</li>
+        <li>Designed high-performance data pipelines with emphasis on memory safety and zero-cost abstractions.</li>
+      </ul>
+    </div>
+    <div class="eitem reveal">
+      <div class="emeta"><span class="eco">ElHagry Company</span><span class="eper">Mar 2024 – Jul 2024</span><span class="etype">Part-Time · Onsite</span></div>
+      <div class="erole">Embedded Engineer</div>
+      <ul class="ebullets">
+        <li>Developed embedded software for IoT devices (Raspberry Pi, ESP32), integrating sensors with real-time data pipelines.</li>
+        <li>Built firmware for sensor data acquisition, processing, and wireless transmission over MQTT/HTTP.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="div" />
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="slabel reveal">Portfolio</div>
+  <h2 class="stitle reveal">Featured <em>Projects</em></h2>
+  <div class="pgrid">
+
+    <div class="pcard reveal" onclick="openModal('m1')">
+      <div class="pch"><div class="picon" style="background:rgba(74,127,165,.15)">🚗</div><span class="pgrade ga">A+</span></div>
+      <div class="pcb">
+        <div class="pname">ADAS &amp; Self-Driving Assistance System</div>
+        <div class="pdesc">Graduation project — Smart driving assistance backend processing real-time AI detections from IoT devices and generating intelligent driver alerts.</div>
+        <div class="ptags"><span class="tag">ASP.NET Core</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">Raspberry Pi</span><span class="tag">ESP32</span></div>
+      </div>
+      <div class="pcf">
+        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
+        <a target="_blank" href="https://youtu.be/L2kGn4D6IUA" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard reveal" onclick="openModal('m2')">
+      <div class="pch"><div class="picon" style="background:rgba(139,38,53,.12)">💬</div><span class="pgrade gb">Real-Time</span></div>
+      <div class="pcb">
+        <div class="pname">Real-Time Customs Support Chat</div>
+        <div class="pdesc">Secure real-time chat platform with role-based access, live messaging, and isolated room access control using SignalR WebSockets.</div>
+        <div class="ptags"><span class="tag">SignalR</span><span class="tag">JWT Auth</span><span class="tag">Claims &amp; Roles</span><span class="tag">EF Core</span><span class="tag">SQL Server</span></div>
+      </div>
+      <div class="pcf">
+        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
+        <a target="_blank" href="https://github.com/ii20aya/Gamarek.git" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard reveal" onclick="openModal('m3')">
+      <div class="pch"><div class="picon" style="background:rgba(100,80,160,.12)">🏨</div></div>
+      <div class="pcb">
+        <div class="pname">Royal Stay — Hotel Management System</div>
+        <div class="pdesc">Full-stack luxury hotel booking portal with real-time notifications, secure authentication, and a responsive admin dashboard.</div>
+        <div class="ptags"><span class="tag">Angular</span><span class="tag">.NET Web API</span><span class="tag">SignalR</span><span class="tag">RxJS</span><span class="tag">Bootstrap 5</span></div>
+      </div>
+      <div class="pcf">
+        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
+        <a  target="_blank" href="https://youtu.be/uu2Y1UUP_vo" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard reveal" onclick="openModal('m4')">
+      <div class="pch"><div class="picon" style="background:rgba(40,140,100,.12)">📖</div></div>
+      <div class="pcb">
+        <div class="pname">Holy Quran Rewards &amp; Auction System</div>
+        <div class="pdesc">Points-based reward system with live auctions and automated bidding via .NET Background Services and auction scheduling.</div>
+        <div class="ptags"><span class="tag">ASP.NET Core</span><span class="tag">Background Services</span><span class="tag">EF Core</span><span class="tag">Swagger</span></div>
+      </div>
+      <div class="pcf">
+        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
+        <a target="_blank" href="https://github.com/ii20aya/Holy_quran.git" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard reveal" onclick="openModal('m5')">
+      <div class="pch"><div class="picon" style="background:rgba(74,127,165,.15)">📚</div></div>
+      <div class="pcb">
+        <div class="pname">Online Bookstore E-Commerce Platform</div>
+        <div class="pdesc">Fully functional e-commerce API: product management, cart, orders, payments, and a complete admin panel with JWT auth.</div>
+        <div class="ptags"><span class="tag">ASP.NET Core</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">JWT Auth</span><span class="tag">Admin Panel</span></div>
+      </div>
+      <div class="pcf">
+        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
+        <span style="font-size:.8rem;color:var(--text3)">API Project</span>
+      </div>
+    </div>
+
+    <div class="pcard reveal" onclick="openModal('m6')">
+      <div class="pch"><div class="picon" style="background:rgba(139,38,53,.12)">🏥</div><span class="pgrade gb">Team</span></div>
+      <div class="pcb">
+        <div class="pname">Healthcare Appointment System</div>
+        <div class="pdesc">Role-based healthcare platform for appointment booking, medical records, prescriptions, and admin management with modular Angular architecture.</div>
+        <div class="ptags"><span class="tag">Angular</span><span class="tag">RxJS</span><span class="tag">Reactive Forms</span><span class="tag">Guards</span><span class="tag">REST API</span></div>
+      </div>
+      <div class="pcf">
+        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
+        <a  target="_blank" href="https://youtu.be/5on8xilGMrg" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODALS -->
+<div class="moverlay" id="m1" onclick="closeM(this)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="mclose" onclick="closeM(document.getElementById('m1'))">&#x2715;</button>
+    <h2>🚗 ADAS &amp; Self-Driving Assistance</h2>
+    <div class="mst">Overview</div>
+    <p>Graduation project earning a top grade of A+. A smart driving assistance backend that processes real-time AI detections from embedded IoT devices (Raspberry Pi, ESP32) and generates contextual driver alerts. Built with Clean Architecture for full decoupling between domain, application, and infrastructure layers.</p>
+    <div class="mst">Key Features</div>
+    <p>Real-time sensor data ingestion · AI detection processing pipeline · Driver alert generation engine · IoT device management · RESTful API for frontend · Clean Architecture layered separation</p>
+    <div class="mst">Tech Stack</div>
+    <div class="ptags"><span class="tag">ASP.NET Core API</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">Raspberry Pi</span><span class="tag">ESP32</span><span class="tag">Clean Architecture</span><span class="tag">IoT</span></div>
+    <div class="mlinks"><a href="https://youtu.be/L2kGn4D6IUA" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div>
+  </div>
+</div>
+
+<div class="moverlay" id="m2" onclick="closeM(this)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="mclose" onclick="closeM(document.getElementById('m2'))">&#x2715;</button>
+    <h2>💬 Real-Time Customs Support Chat</h2>
+    <div class="mst">Overview</div>
+    <p>A secure real-time chat platform for customs support teams with role-based room access. JWT claims-based identity ensures agents and supervisors see only relevant conversations. Messages delivered instantly via SignalR WebSocket connections with full persistence via EF Core.</p>
+    <div class="mst">Key Features</div>
+    <p>Real-time messaging via SignalR · JWT-secured endpoints · Claims &amp; Roles access control · Room-based conversation isolation · Message persistence · Scalable hub architecture</p>
+    <div class="mst">Tech Stack</div>
+    <div class="ptags"><span class="tag">SignalR</span><span class="tag">JWT Auth</span><span class="tag">Claims &amp; Roles</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">Room Access Control</span></div>
+    <div class="mlinks"><a href="https://github.com/ii20aya/Gamarek.git" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div>
+  </div>
+</div>
+
+<div class="moverlay" id="m3" onclick="closeM(this)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="mclose" onclick="closeM(document.getElementById('m3'))">&#x2715;</button>
+    <h2>🏨 Royal Stay — Hotel Management</h2>
+    <div class="mst">Overview</div>
+    <p>A full-stack luxury hotel booking portal. Guests can browse rooms, make bookings, and receive live availability notifications. The admin dashboard provides occupancy analytics, booking management, and communication tools — fully responsive with Bootstrap 5.</p>
+    <div class="mst">Key Features</div>
+    <p>Room browsing &amp; booking flow · Real-time availability via SignalR · JWT authentication · Responsive Angular frontend with RxJS state management · Admin dashboard · Payment integration hooks</p>
+    <div class="mst">Tech Stack</div>
+    <div class="ptags"><span class="tag">Angular</span><span class="tag">.NET Web API</span><span class="tag">SignalR</span><span class="tag">RxJS</span><span class="tag">JWT Auth</span><span class="tag">Bootstrap 5</span></div>
+    <div class="mlinks"><a href="https://youtu.be/uu2Y1UUP_vo" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div>
+  </div>
+</div>
+
+<div class="moverlay" id="m4" onclick="closeM(this)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="mclose" onclick="closeM(document.getElementById('m4'))">&#x2715;</button>
+    <h2>📖 Holy Quran Rewards &amp; Auction</h2>
+    <div class="mst">Overview</div>
+    <p>A points-based reward system for Quran memorization with a live auction module. Students earn points through achievement milestones and bid on items using those points. Automated bidding runs via .NET Background Services with scheduled auction management and full Swagger documentation.</p>
+    <div class="mst">Key Features</div>
+    <p>Points accumulation · Live auctions with automated bidding · Background Services scheduling · Achievement tracking · Swagger API docs · Role-based access</p>
+    <div class="mst">Tech Stack</div>
+    <div class="ptags"><span class="tag">ASP.NET Core API</span><span class="tag">Background Services</span><span class="tag">EF Core</span><span class="tag">Auction Scheduling</span><span class="tag">Swagger</span><span class="tag">JWT Auth</span></div>
+    <div class="mlinks"><a href="https://github.com/ii20aya/Holy_quran.git" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div>
+  </div>
+</div>
+
+<div class="moverlay" id="m5" onclick="closeM(this)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="mclose" onclick="closeM(document.getElementById('m5'))">&#x2715;</button>
+    <h2>📚 Online Bookstore E-Commerce</h2>
+    <div class="mst">Overview</div>
+    <p>A fully functional e-commerce API covering the complete shopping flow — from browsing and product management to cart, checkout, orders, and payments — with a full admin panel for inventory and order management.</p>
+    <div class="mst">Key Features</div>
+    <p>Product catalog management · Shopping cart &amp; wishlist · Order processing pipeline · Payment integration · Admin inventory panel · JWT authentication &amp; authorization</p>
+    <div class="mst">Tech Stack</div>
+    <div class="ptags"><span class="tag">ASP.NET Core API</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">JWT Auth</span><span class="tag">Cart &amp; Orders</span><span class="tag">Admin Panel</span></div>
+  </div>
+</div>
+
+<div class="moverlay" id="m6" onclick="closeM(this)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="mclose" onclick="closeM(document.getElementById('m6'))">&#x2715;</button>
+    <h2>🏥 Healthcare Appointment System</h2>
+    <div class="mst">Overview</div>
+    <p>A team-built, role-based healthcare platform (Patient, Doctor, Admin) enabling appointment booking, medical record management, prescriptions, and admin workflows with modular Angular architecture using Guards and Interceptors.</p>
+    <div class="mst">Key Features</div>
+    <p>Multi-role access · Appointment booking &amp; scheduling · Medical records &amp; prescriptions · Angular Guards &amp; Interceptors · Responsive Bootstrap UI · REST API integration</p>
+    <div class="mst">Tech Stack</div>
+    <div class="ptags"><span class="tag">Angular</span><span class="tag">json-server</span><span class="tag">RxJS</span><span class="tag">Reactive Forms</span><span class="tag">Guards</span><span class="tag">Interceptors</span><span class="tag">Bootstrap</span></div>
+    <div class="mlinks"><a href="https://youtu.be/5on8xilGMrg" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div>
+  </div>
+</div>
+
+<hr class="div" />
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="slabel reveal">Expertise</div>
+  <h2 class="stitle reveal">Technical <em>Skills</em></h2>
+  <div class="sgrid">
+    <div class="sgroup reveal">
+      <div class="sgh"><div class="sgicon blue2">⚙️</div><div class="sgt">Backend Development</div></div>
+      <div class="spills"><span class="spill">C#</span><span class="spill">ASP.NET Core</span><span class="spill">Web API</span><span class="spill">EF Core</span><span class="spill">LINQ</span><span class="spill">SignalR</span><span class="spill">JWT</span><span class="spill">Background Services</span><span class="spill">MVC</span><span class="spill">REST APIs</span></div>
+    </div>
+    <div class="sgroup reveal">
+      <div class="sgh"><div class="sgicon wine2">🎨</div><div class="sgt">Frontend Development</div></div>
+      <div class="spills"><span class="spill">Angular 20</span><span class="spill">TypeScript</span><span class="spill">RxJS</span><span class="spill">HTML5</span><span class="spill">CSS3</span><span class="spill">JavaScript</span><span class="spill">Bootstrap 5</span><span class="spill">Reactive Forms</span></div>
+    </div>
+    <div class="sgroup reveal">
+      <div class="sgh"><div class="sgicon purple">🗄️</div><div class="sgt">Databases</div></div>
+      <div class="spills"><span class="spill">SQL Server</span><span class="spill">Stored Procedures</span><span class="spill">Indexing</span><span class="spill">Triggers</span><span class="spill">MySQL</span><span class="spill">Firebase</span><span class="spill">DB Design</span></div>
+    </div>
+    <div class="sgroup reveal">
+      <div class="sgh"><div class="sgicon green2">🏗️</div><div class="sgt">Architecture &amp; Patterns</div></div>
+      <div class="spills"><span class="spill">Clean Architecture</span><span class="spill">SOLID</span><span class="spill">OOP</span><span class="spill">Design Patterns</span><span class="spill">DDD</span><span class="spill">Agile/Scrum</span></div>
+    </div>
+    <div class="sgroup reveal">
+      <div class="sgh"><div class="sgicon blue2">🛠️</div><div class="sgt">Tools &amp; Platforms</div></div>
+      <div class="spills"><span class="spill">Git/GitHub</span><span class="spill">Docker</span><span class="spill">CI/CD</span><span class="spill">Postman</span><span class="spill">Swagger</span><span class="spill">VS Code</span><span class="spill">Visual Studio</span></div>
+    </div>
+    <div class="sgroup reveal">
+      <div class="sgh"><div class="sgicon wine2">🔩</div><div class="sgt">Additional Expertise</div></div>
+      <div class="spills"><span class="spill">Rust</span><span class="spill">Raspberry Pi</span><span class="spill">ESP32</span><span class="spill">IoT Systems</span><span class="spill">Embedded C</span><span class="spill">MQTT</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="div" />
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="cinner">
+    <div class="slabel reveal" style="justify-content:center">Let's Connect</div>
+    <h2 class="stitle reveal" style="text-align:center">Get In <em>Touch</em></h2>
+    <p class="cdesc reveal">I'm open to new opportunities, collaborations, and interesting projects. Whether you have a role in mind, a project idea, or just want to say hello — my inbox is always open.</p>
+    <div class="sgrid2 reveal">
+      <a href="mailto:dann742003@gmail.com" class="slink">📧 Email Me</a>
+      <a href="tel:+201210914842" class="slink">📱 +20 121 091 4842</a>
+      <a href="https://www.linkedin.com/in/aya-abdulaziz" target="_blank" class="slink">💼 LinkedIn</a>
+      <a href="https://github.com/" target="_blank" class="slink">🐙 GitHub</a>
+      <a href="https://www.facebook.com/" target="_blank" class="slink">📘 Facebook</a>
+      <a href="https://www.instagram.com/" target="_blank" class="slink">📸 Instagram</a>
+    </div>
+    <p class="reveal" style="color:var(--text3);font-size:.9rem;margin-top:1rem">Or reach me directly at <a href="mailto:dann742003@gmail.com" class="cemail">dann742003@gmail.com</a></p>
+  </div>
+</section>
+
+<footer><p>Designed &amp; Built with <span>&#9829;</span> by Aya Abdulaziz &middot; 2026</p></footer>
+
+<script>
+  // Theme
+  const html=document.documentElement,btn=document.getElementById('themeBtn');
+  html.setAttribute('data-theme',localStorage.getItem('theme')||'light');
+  btn.addEventListener('click',()=>{
+    const n=html.getAttribute('data-theme')==='light'?'dark':'light';
+    html.setAttribute('data-theme',n);localStorage.setItem('theme',n);
+  });
+
+  // Scroll progress
+  const sp=document.getElementById('sp');
+  window.addEventListener('scroll',()=>{sp.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%'});
+
+  // Reveal
+  const els=document.querySelectorAll('.reveal,.reveal-l,.reveal-r');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const el=e.target;
+        const sibs=[...el.parentElement.children].filter(c=>c.classList.contains('reveal')||c.classList.contains('reveal-l')||c.classList.contains('reveal-r'));
+        const idx=sibs.indexOf(el);
+        setTimeout(()=>el.classList.add('visible'),idx*90);
+        obs.unobserve(el);
+      }
+    });
+  },{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+  els.forEach(e=>obs.observe(e));
+
+  // Typewriter
+  const roles=['Full Stack .NET Engineer','Angular Developer','ASP.NET Core Specialist','Clean Architecture Advocate','IoT & Embedded Engineer'];
+  let ri=0,ci=0,typing=true;
+  const tw=document.getElementById('tw');
+  function loop(){
+    const w=roles[ri];
+    if(typing){tw.textContent=w.slice(0,++ci);if(ci===w.length){typing=false;setTimeout(loop,2000);return;}}
+    else{tw.textContent=w.slice(0,--ci);if(ci===0){typing=true;ri=(ri+1)%roles.length;setTimeout(loop,300);return;}}
+    setTimeout(loop,typing?70:40);
+  }
+  setTimeout(loop,1200);
+
+  // Modals
+  function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+  function closeM(el){el.classList.remove('open');document.body.style.overflow='';}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.moverlay.open').forEach(m=>closeM(m));});
+
+  // Nav highlight
+  const secs=document.querySelectorAll('section[id]');
+  const navAs=document.querySelectorAll('.nav-links a');
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){navAs.forEach(a=>a.style.color='');const l=document.querySelector('.nav-links a[href="#'+e.target.id+'"]');if(l)l.style.color='var(--wine)';}});
+  },{threshold:.4}).observe;
+  secs.forEach(s=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){navAs.forEach(a=>a.style.color='');const l=document.querySelector('.nav-links a[href="#'+e.target.id+'"]');if(l)l.style.color='var(--wine)';}});},{threshold:.4}).observe(s));
+</script>
+</body>
+</html>
