@@ -77,47 +77,26 @@
     .himg{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;opacity:0;transform:scale(.95);animation:scIn .9s .4s forwards}
     @keyframes scIn{to{opacity:1;transform:scale(1)}}
 
-.hframe {
-    position: relative;
-    width: 100%; 
-    max-width: 380px; 
-    aspect-ratio: 380 / 430;
-    margin: 0 auto;
-}
-
-.hphoto {
-    position: absolute;
-    top: 15%;
-    left: 5%;
-    width: 90%; 
-    height: auto; 
-    aspect-ratio: 360 / 210; 
-    border-radius: 44%;
-    object-fit: cover;
-    object-position: top center;
-    box-shadow: 0 24px 60px var(--shadow);
-    filter: contrast(1.02) saturate(1.05);
-    border: 4px solid white;
-    z-index: 2;
-}
-
-@media(max-width:900px){
-    .hframe {
-        width: 280px;
-        height: auto;
-    }
-    .hphoto {
-        width: 100%;
-        left: 0;
-        top: 10%;
-    }
-  .hblobg {
-        width: 270px;
-        height: 320px;
-    }
-}
+    /* ===== HERO FRAME & PHOTO ===== */
+    .hframe{position:relative;width:380px;height:430px}
     .hblobg{position:absolute;width:340px;height:385px;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;background:linear-gradient(135deg,var(--steel-l) 0%,var(--border) 100%);top:20px;left:20px;animation:morph 8s ease-in-out infinite}
     @keyframes morph{0%,100%{border-radius:30% 70% 70% 30%/30% 30% 70% 70%}50%{border-radius:70% 30% 30% 70%/70% 70% 30% 30%}}
+
+    /* الصورة: landscape ثابتة على desktop */
+    .hphoto{
+      position:absolute;
+      top:80px;
+      left:0;
+      width:360px;
+      height:210px;
+      border-radius:44%;
+      object-fit:cover;
+      object-position:top center;
+      box-shadow:0 24px 60px var(--shadow);
+      filter:contrast(1.02) saturate(1.05);
+      border:4px solid white;
+      z-index:2;
+    }
 
     .haccent{position:absolute;bottom:-10px;right:-10px;width:80px;height:80px;border-radius:50%;background:var(--wine);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(139,38,53,.4);font-family:'Playfair Display',serif;font-size:1rem;color:#fff;font-style:italic;animation:fl1 5s ease-in-out infinite}
 
@@ -227,13 +206,26 @@
     .reveal-r{opacity:0;transform:translateX(40px);transition:opacity .7s ease,transform .7s ease}
     .reveal-r.visible{opacity:1;transform:translateX(0)}
 
-    /* RESPONSIVE */
+    /* ===== RESPONSIVE ===== */
     @media(max-width:900px){
       nav{padding:1rem 1.5rem}.nav-links{display:none}
       #hero{grid-template-columns:1fr;padding:7rem 1.5rem 4rem;text-align:center}
       .himg{order:-1}.hctas{justify-content:center}.hstats{justify-content:center}
       .hdesc{margin:0 auto 2.5rem}
-      .hframe{width:260px;height:295px}.hblobg,.hphoto{width:240px;height:275px}
+
+      /* الـ frame والـ blob بيتصغروا */
+      .hframe{width:300px;height:240px}
+      .hblobg{width:270px;height:210px}
+
+      /* الصورة بتحافظ على نفس الـ landscape shape بس بتتصغر proportionally */
+      /* desktop ratio: 360w × 210h  →  mobile: 270w × 158h  (نفس النسبة 360:210) */
+      .hphoto{
+        width:270px;
+        height:158px;
+        top:42px;
+        left:0;
+      }
+
       .haccent{width:56px;height:56px;font-size:.85rem}
       section{padding:4rem 1.5rem}
       .agrid{grid-template-columns:1fr;gap:2.5rem}
@@ -327,7 +319,6 @@
   <h2 class="stitle reveal">Work <em>Experience</em></h2>
   <div class="timeline">
     <div class="eitem reveal">
-     
     <div class="eitem reveal">
       <div class="emeta"><span class="eco">Corelia</span><span class="eper">Oct 2024 – May 2025</span><span class="etype">Part-Time · Hybrid</span></div>
       <div class="erole">Rust Developer</div>
@@ -568,7 +559,6 @@
       <a href="https://www.linkedin.com/in/aya-abdulaziz-21a285234/" target="_blank" class="slink">💼 LinkedIn</a>
       <a href="https://github.com/ii20aya" target="_blank" class="slink">🐙 GitHub</a>
       <a href="https://www.facebook.com/ayoosha.aziz/" target="_blank" class="slink">📘 Facebook</a>
-      
     </div>
     <p class="reveal" style="color:var(--text3);font-size:.9rem;margin-top:1rem">Or reach me directly at <a href="mailto:dann742003@gmail.com" class="cemail">dann742003@gmail.com</a></p>
   </div>
@@ -624,9 +614,6 @@
   // Nav highlight
   const secs=document.querySelectorAll('section[id]');
   const navAs=document.querySelectorAll('.nav-links a');
-  new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting){navAs.forEach(a=>a.style.color='');const l=document.querySelector('.nav-links a[href="#'+e.target.id+'"]');if(l)l.style.color='var(--wine)';}});
-  },{threshold:.4}).observe;
   secs.forEach(s=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){navAs.forEach(a=>a.style.color='');const l=document.querySelector('.nav-links a[href="#'+e.target.id+'"]');if(l)l.style.color='var(--wine)';}});},{threshold:.4}).observe(s));
 </script>
 </body>
