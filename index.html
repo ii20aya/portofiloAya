@@ -76,23 +76,45 @@
     .hstat .lbl{font-size:.78rem;color:var(--text3);margin-top:.3rem;text-transform:uppercase;letter-spacing:.06em}
     .himg{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;opacity:0;transform:scale(.95);animation:scIn .9s .4s forwards}
     @keyframes scIn{to{opacity:1;transform:scale(1)}}
-    .hframe{position:relative;width:380px;height:430px}
+
+.hframe {
+    position: relative;
+    width: 100%; 
+    max-width: 380px; 
+    aspect-ratio: 380 / 430;
+    margin: 0 auto;
+}
+
+.hphoto {
+    position: absolute;
+    top: 15%;
+    left: 5%;
+    width: 90%; 
+    height: auto; 
+    aspect-ratio: 360 / 210; 
+    border-radius: 44%;
+    object-fit: cover;
+    object-position: top center;
+    box-shadow: 0 24px 60px var(--shadow);
+    filter: contrast(1.02) saturate(1.05);
+    border: 4px solid white;
+    z-index: 2;
+}
+
+@media(max-width:900px){
+    .hframe {
+        width: 280px;
+        height: auto;
+    }
+    .hphoto {
+        width: 100%;
+        left: 0;
+        top: 10%;
+    }
+}
     .hblobg{position:absolute;width:340px;height:385px;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;background:linear-gradient(135deg,var(--steel-l) 0%,var(--border) 100%);top:20px;left:20px;animation:morph 8s ease-in-out infinite}
     @keyframes morph{0%,100%{border-radius:30% 70% 70% 30%/30% 30% 70% 70%}50%{border-radius:70% 30% 30% 70%/70% 70% 30% 30%}}
-.hphoto {
-  position: absolute;
-  top: 80px;
-  left: 0;
-  width: 360px;
-  height: 210px;
-  border-radius: 44%;
-  object-fit: cover;
-  object-position: top center;
-  box-shadow: 0 24px 60px var(--shadow);
-  filter: contrast(1.02) saturate(1.05);
-  border: 4px solid white;
-  z-index: 2;
-}
+
     .haccent{position:absolute;bottom:-10px;right:-10px;width:80px;height:80px;border-radius:50%;background:var(--wine);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(139,38,53,.4);font-family:'Playfair Display',serif;font-size:1rem;color:#fff;font-style:italic;animation:fl1 5s ease-in-out infinite}
 
     @keyframes fup{to{opacity:1;transform:translateY(0)}}
