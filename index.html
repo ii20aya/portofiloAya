@@ -44,7 +44,6 @@
     .theme-btn::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--steel);transition:transform var(--tr),background var(--tr);box-shadow:0 2px 6px var(--shadow)}
     [data-theme="dark"] .theme-btn::after{transform:translateX(22px);background:var(--wine)}
 
-    /* SCROLL BAR */
     .sprogress{position:fixed;top:0;left:0;height:2.5px;z-index:999;background:linear-gradient(90deg,var(--wine),var(--steel));width:0;transition:width .1s}
 
     /* HERO */
@@ -78,20 +77,23 @@
     @keyframes scIn{to{opacity:1;transform:scale(1)}}
 
     /* ===== HERO FRAME & PHOTO ===== */
-    .hframe{position:relative;width:380px;height:430px}
-    .hblobg{position:absolute;width:340px;height:385px;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;background:linear-gradient(135deg,var(--steel-l) 0%,var(--border) 100%);top:20px;left:20px;animation:morph 8s ease-in-out infinite}
+    .hframe{position:relative;width:380px;height:380px}
+    .hblobg{position:absolute;width:340px;height:340px;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;background:linear-gradient(135deg,var(--steel-l) 0%,var(--border) 100%);top:20px;left:20px;animation:morph 8s ease-in-out infinite}
     @keyframes morph{0%,100%{border-radius:30% 70% 70% 30%/30% 30% 70% 70%}50%{border-radius:70% 30% 30% 70%/70% 70% 30% 30%}}
 
-    /* الصورة: landscape ثابتة على desktop */
+    /*
+     * .hphoto — landscape oval، height أقل = crop أكتر من الأسفل
+     * object-position: 50% 8% → يركّز على الوجه والصدر
+     */
     .hphoto{
       position:absolute;
-      top:80px;
+      top:90px;
       left:0;
       width:360px;
-      height:210px;
+      height:165px;
       border-radius:44%;
       object-fit:cover;
-      object-position:top center;
+      object-position:50% 8%;
       box-shadow:0 24px 60px var(--shadow);
       filter:contrast(1.02) saturate(1.05);
       border:4px solid white;
@@ -198,7 +200,7 @@
     [data-theme="dark"] footer{background:var(--bg2)}
     footer span{color:var(--wine)}
 
-    /* REVEAL ANIMATIONS */
+    /* REVEAL */
     .reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
     .reveal-l{opacity:0;transform:translateX(-40px);transition:opacity .7s ease,transform .7s ease}
@@ -213,17 +215,16 @@
       .himg{order:-1}.hctas{justify-content:center}.hstats{justify-content:center}
       .hdesc{margin:0 auto 2.5rem}
 
-      /* الـ frame والـ blob بيتصغروا */
-      .hframe{width:300px;height:240px}
-      .hblobg{width:270px;height:210px}
+      .hframe{width:300px;height:220px}
+      .hblobg{width:260px;height:195px}
 
-      /* الصورة بتحافظ على نفس الـ landscape shape بس بتتصغر proportionally */
-      /* desktop ratio: 360w × 210h  →  mobile: 270w × 158h  (نفس النسبة 360:210) */
+      /* نفس نسبة الـ desktop (360:165) مضروبة في 0.75 → (270:124) */
       .hphoto{
         width:270px;
-        height:158px;
-        top:42px;
+        height:124px;
+        top:48px;
         left:0;
+        object-position:50% 8%;
       }
 
       .haccent{width:56px;height:56px;font-size:.85rem}
@@ -251,7 +252,6 @@
   <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"></button>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hbg hbg1"></div>
   <div class="hbg hbg2"></div>
@@ -287,7 +287,6 @@
 
 <hr class="div" />
 
-<!-- ABOUT -->
 <section id="about">
   <div class="slabel reveal">About Me</div>
   <h2 class="stitle reveal">Crafting Digital <em>Experiences</em></h2>
@@ -313,7 +312,6 @@
 
 <hr class="div" />
 
-<!-- EXPERIENCE -->
 <section id="experience">
   <div class="slabel reveal">Career</div>
   <h2 class="stitle reveal">Work <em>Experience</em></h2>
@@ -340,12 +338,10 @@
 
 <hr class="div" />
 
-<!-- PROJECTS -->
 <section id="projects">
   <div class="slabel reveal">Portfolio</div>
   <h2 class="stitle reveal">Featured <em>Projects</em></h2>
   <div class="pgrid">
-
     <div class="pcard reveal" onclick="openModal('m1')">
       <div class="pch"><div class="picon" style="background:rgba(74,127,165,.15)">🚗</div><span class="pgrade ga">A+</span></div>
       <div class="pcb">
@@ -353,12 +349,8 @@
         <div class="pdesc">Graduation project — Smart driving assistance backend processing real-time AI detections from IoT devices and generating intelligent driver alerts.</div>
         <div class="ptags"><span class="tag">ASP.NET Core</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">Raspberry Pi</span><span class="tag">ESP32</span></div>
       </div>
-      <div class="pcf">
-        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
-        <a target="_blank" href="https://youtu.be/L2kGn4D6IUA" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
+      <div class="pcf"><span style="font-size:.8rem;color:var(--text3)">Click for details</span><a target="_blank" href="https://youtu.be/L2kGn4D6IUA" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
     </div>
-
     <div class="pcard reveal" onclick="openModal('m2')">
       <div class="pch"><div class="picon" style="background:rgba(139,38,53,.12)">💬</div><span class="pgrade gb">Real-Time</span></div>
       <div class="pcb">
@@ -366,12 +358,8 @@
         <div class="pdesc">Secure real-time chat platform with role-based access, live messaging, and isolated room access control using SignalR WebSockets.</div>
         <div class="ptags"><span class="tag">SignalR</span><span class="tag">JWT Auth</span><span class="tag">Claims &amp; Roles</span><span class="tag">EF Core</span><span class="tag">SQL Server</span></div>
       </div>
-      <div class="pcf">
-        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
-        <a target="_blank" href="https://github.com/ii20aya/Gamarek.git" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
+      <div class="pcf"><span style="font-size:.8rem;color:var(--text3)">Click for details</span><a target="_blank" href="https://github.com/ii20aya/Gamarek.git" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
     </div>
-
     <div class="pcard reveal" onclick="openModal('m3')">
       <div class="pch"><div class="picon" style="background:rgba(100,80,160,.12)">🏨</div></div>
       <div class="pcb">
@@ -379,12 +367,8 @@
         <div class="pdesc">Full-stack luxury hotel booking portal with real-time notifications, secure authentication, and a responsive admin dashboard.</div>
         <div class="ptags"><span class="tag">Angular</span><span class="tag">.NET Web API</span><span class="tag">SignalR</span><span class="tag">RxJS</span><span class="tag">Bootstrap 5</span></div>
       </div>
-      <div class="pcf">
-        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
-        <a  target="_blank" href="https://youtu.be/uu2Y1UUP_vo" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
+      <div class="pcf"><span style="font-size:.8rem;color:var(--text3)">Click for details</span><a target="_blank" href="https://youtu.be/uu2Y1UUP_vo" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
     </div>
-
     <div class="pcard reveal" onclick="openModal('m4')">
       <div class="pch"><div class="picon" style="background:rgba(40,140,100,.12)">📖</div></div>
       <div class="pcb">
@@ -392,12 +376,8 @@
         <div class="pdesc">Points-based reward system with live auctions and automated bidding via .NET Background Services and auction scheduling.</div>
         <div class="ptags"><span class="tag">ASP.NET Core</span><span class="tag">Background Services</span><span class="tag">EF Core</span><span class="tag">Swagger</span></div>
       </div>
-      <div class="pcf">
-        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
-        <a target="_blank" href="https://github.com/ii20aya/Holy_quran.git" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
+      <div class="pcf"><span style="font-size:.8rem;color:var(--text3)">Click for details</span><a target="_blank" href="https://github.com/ii20aya/Holy_quran.git" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
     </div>
-
     <div class="pcard reveal" onclick="openModal('m5')">
       <div class="pch"><div class="picon" style="background:rgba(74,127,165,.15)">📚</div></div>
       <div class="pcb">
@@ -405,12 +385,8 @@
         <div class="pdesc">Fully functional e-commerce API: product management, cart, orders, payments, and a complete admin panel with JWT auth.</div>
         <div class="ptags"><span class="tag">ASP.NET Core</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">JWT Auth</span><span class="tag">Admin Panel</span></div>
       </div>
-      <div class="pcf">
-        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
-        <span style="font-size:.8rem;color:var(--text3)">API Project</span>
-      </div>
+      <div class="pcf"><span style="font-size:.8rem;color:var(--text3)">Click for details</span><span style="font-size:.8rem;color:var(--text3)">API Project</span></div>
     </div>
-
     <div class="pcard reveal" onclick="openModal('m6')">
       <div class="pch"><div class="picon" style="background:rgba(139,38,53,.12)">🏥</div><span class="pgrade gb">Team</span></div>
       <div class="pcb">
@@ -418,136 +394,36 @@
         <div class="pdesc">Role-based healthcare platform for appointment booking, medical records, prescriptions, and admin management with modular Angular architecture.</div>
         <div class="ptags"><span class="tag">Angular</span><span class="tag">RxJS</span><span class="tag">Reactive Forms</span><span class="tag">Guards</span><span class="tag">REST API</span></div>
       </div>
-      <div class="pcf">
-        <span style="font-size:.8rem;color:var(--text3)">Click for details</span>
-        <a  target="_blank" href="https://youtu.be/5on8xilGMrg" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
+      <div class="pcf"><span style="font-size:.8rem;color:var(--text3)">Click for details</span><a target="_blank" href="https://youtu.be/5on8xilGMrg" class="plink" onclick="event.stopPropagation()">Live Demo <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
     </div>
-
   </div>
 </section>
 
 <!-- MODALS -->
-<div class="moverlay" id="m1" onclick="closeM(this)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <button class="mclose" onclick="closeM(document.getElementById('m1'))">&#x2715;</button>
-    <h2>🚗 ADAS &amp; Self-Driving Assistance</h2>
-    <div class="mst">Overview</div>
-    <p>Graduation project earning a top grade of A+. A smart driving assistance backend that processes real-time AI detections from embedded IoT devices (Raspberry Pi, ESP32) and generates contextual driver alerts. Built with Clean Architecture for full decoupling between domain, application, and infrastructure layers.</p>
-    <div class="mst">Key Features</div>
-    <p>Real-time sensor data ingestion · AI detection processing pipeline · Driver alert generation engine · IoT device management · RESTful API for frontend · Clean Architecture layered separation</p>
-    <div class="mst">Tech Stack</div>
-    <div class="ptags"><span class="tag">ASP.NET Core API</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">Raspberry Pi</span><span class="tag">ESP32</span><span class="tag">Clean Architecture</span><span class="tag">IoT</span></div>
-    <div class="mlinks"><a href="https://youtu.be/L2kGn4D6IUA" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div>
-  </div>
-</div>
-
-<div class="moverlay" id="m2" onclick="closeM(this)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <button class="mclose" onclick="closeM(document.getElementById('m2'))">&#x2715;</button>
-    <h2>💬 Real-Time Customs Support Chat</h2>
-    <div class="mst">Overview</div>
-    <p>A secure real-time chat platform for customs support teams with role-based room access. JWT claims-based identity ensures agents and supervisors see only relevant conversations. Messages delivered instantly via SignalR WebSocket connections with full persistence via EF Core.</p>
-    <div class="mst">Key Features</div>
-    <p>Real-time messaging via SignalR · JWT-secured endpoints · Claims &amp; Roles access control · Room-based conversation isolation · Message persistence · Scalable hub architecture</p>
-    <div class="mst">Tech Stack</div>
-    <div class="ptags"><span class="tag">SignalR</span><span class="tag">JWT Auth</span><span class="tag">Claims &amp; Roles</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">Room Access Control</span></div>
-    <div class="mlinks"><a href="https://github.com/ii20aya/Gamarek.git" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div>
-  </div>
-</div>
-
-<div class="moverlay" id="m3" onclick="closeM(this)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <button class="mclose" onclick="closeM(document.getElementById('m3'))">&#x2715;</button>
-    <h2>🏨 Royal Stay — Hotel Management</h2>
-    <div class="mst">Overview</div>
-    <p>A full-stack luxury hotel booking portal. Guests can browse rooms, make bookings, and receive live availability notifications. The admin dashboard provides occupancy analytics, booking management, and communication tools — fully responsive with Bootstrap 5.</p>
-    <div class="mst">Key Features</div>
-    <p>Room browsing &amp; booking flow · Real-time availability via SignalR · JWT authentication · Responsive Angular frontend with RxJS state management · Admin dashboard · Payment integration hooks</p>
-    <div class="mst">Tech Stack</div>
-    <div class="ptags"><span class="tag">Angular</span><span class="tag">.NET Web API</span><span class="tag">SignalR</span><span class="tag">RxJS</span><span class="tag">JWT Auth</span><span class="tag">Bootstrap 5</span></div>
-    <div class="mlinks"><a href="https://youtu.be/uu2Y1UUP_vo" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div>
-  </div>
-</div>
-
-<div class="moverlay" id="m4" onclick="closeM(this)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <button class="mclose" onclick="closeM(document.getElementById('m4'))">&#x2715;</button>
-    <h2>📖 Holy Quran Rewards &amp; Auction</h2>
-    <div class="mst">Overview</div>
-    <p>A points-based reward system for Quran memorization with a live auction module. Students earn points through achievement milestones and bid on items using those points. Automated bidding runs via .NET Background Services with scheduled auction management and full Swagger documentation.</p>
-    <div class="mst">Key Features</div>
-    <p>Points accumulation · Live auctions with automated bidding · Background Services scheduling · Achievement tracking · Swagger API docs · Role-based access</p>
-    <div class="mst">Tech Stack</div>
-    <div class="ptags"><span class="tag">ASP.NET Core API</span><span class="tag">Background Services</span><span class="tag">EF Core</span><span class="tag">Auction Scheduling</span><span class="tag">Swagger</span><span class="tag">JWT Auth</span></div>
-    <div class="mlinks"><a href="https://github.com/ii20aya/Holy_quran.git" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div>
-  </div>
-</div>
-
-<div class="moverlay" id="m5" onclick="closeM(this)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <button class="mclose" onclick="closeM(document.getElementById('m5'))">&#x2715;</button>
-    <h2>📚 Online Bookstore E-Commerce</h2>
-    <div class="mst">Overview</div>
-    <p>A fully functional e-commerce API covering the complete shopping flow — from browsing and product management to cart, checkout, orders, and payments — with a full admin panel for inventory and order management.</p>
-    <div class="mst">Key Features</div>
-    <p>Product catalog management · Shopping cart &amp; wishlist · Order processing pipeline · Payment integration · Admin inventory panel · JWT authentication &amp; authorization</p>
-    <div class="mst">Tech Stack</div>
-    <div class="ptags"><span class="tag">ASP.NET Core API</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">JWT Auth</span><span class="tag">Cart &amp; Orders</span><span class="tag">Admin Panel</span></div>
-  </div>
-</div>
-
-<div class="moverlay" id="m6" onclick="closeM(this)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <button class="mclose" onclick="closeM(document.getElementById('m6'))">&#x2715;</button>
-    <h2>🏥 Healthcare Appointment System</h2>
-    <div class="mst">Overview</div>
-    <p>A team-built, role-based healthcare platform (Patient, Doctor, Admin) enabling appointment booking, medical record management, prescriptions, and admin workflows with modular Angular architecture using Guards and Interceptors.</p>
-    <div class="mst">Key Features</div>
-    <p>Multi-role access · Appointment booking &amp; scheduling · Medical records &amp; prescriptions · Angular Guards &amp; Interceptors · Responsive Bootstrap UI · REST API integration</p>
-    <div class="mst">Tech Stack</div>
-    <div class="ptags"><span class="tag">Angular</span><span class="tag">json-server</span><span class="tag">RxJS</span><span class="tag">Reactive Forms</span><span class="tag">Guards</span><span class="tag">Interceptors</span><span class="tag">Bootstrap</span></div>
-    <div class="mlinks"><a href="https://youtu.be/5on8xilGMrg" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div>
-  </div>
-</div>
+<div class="moverlay" id="m1" onclick="closeM(this)"><div class="modal" onclick="event.stopPropagation()"><button class="mclose" onclick="closeM(document.getElementById('m1'))">&#x2715;</button><h2>🚗 ADAS &amp; Self-Driving Assistance</h2><div class="mst">Overview</div><p>Graduation project earning a top grade of A+. A smart driving assistance backend that processes real-time AI detections from embedded IoT devices (Raspberry Pi, ESP32) and generates contextual driver alerts. Built with Clean Architecture for full decoupling between domain, application, and infrastructure layers.</p><div class="mst">Key Features</div><p>Real-time sensor data ingestion · AI detection processing pipeline · Driver alert generation engine · IoT device management · RESTful API for frontend · Clean Architecture layered separation</p><div class="mst">Tech Stack</div><div class="ptags"><span class="tag">ASP.NET Core API</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">Raspberry Pi</span><span class="tag">ESP32</span><span class="tag">Clean Architecture</span><span class="tag">IoT</span></div><div class="mlinks"><a href="https://youtu.be/L2kGn4D6IUA" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div></div></div>
+<div class="moverlay" id="m2" onclick="closeM(this)"><div class="modal" onclick="event.stopPropagation()"><button class="mclose" onclick="closeM(document.getElementById('m2'))">&#x2715;</button><h2>💬 Real-Time Customs Support Chat</h2><div class="mst">Overview</div><p>A secure real-time chat platform for customs support teams with role-based room access. JWT claims-based identity ensures agents and supervisors see only relevant conversations. Messages delivered instantly via SignalR WebSocket connections with full persistence via EF Core.</p><div class="mst">Key Features</div><p>Real-time messaging via SignalR · JWT-secured endpoints · Claims &amp; Roles access control · Room-based conversation isolation · Message persistence · Scalable hub architecture</p><div class="mst">Tech Stack</div><div class="ptags"><span class="tag">SignalR</span><span class="tag">JWT Auth</span><span class="tag">Claims &amp; Roles</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">Room Access Control</span></div><div class="mlinks"><a href="https://github.com/ii20aya/Gamarek.git" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div></div></div>
+<div class="moverlay" id="m3" onclick="closeM(this)"><div class="modal" onclick="event.stopPropagation()"><button class="mclose" onclick="closeM(document.getElementById('m3'))">&#x2715;</button><h2>🏨 Royal Stay — Hotel Management</h2><div class="mst">Overview</div><p>A full-stack luxury hotel booking portal. Guests can browse rooms, make bookings, and receive live availability notifications. The admin dashboard provides occupancy analytics, booking management, and communication tools — fully responsive with Bootstrap 5.</p><div class="mst">Key Features</div><p>Room browsing &amp; booking flow · Real-time availability via SignalR · JWT authentication · Responsive Angular frontend with RxJS state management · Admin dashboard · Payment integration hooks</p><div class="mst">Tech Stack</div><div class="ptags"><span class="tag">Angular</span><span class="tag">.NET Web API</span><span class="tag">SignalR</span><span class="tag">RxJS</span><span class="tag">JWT Auth</span><span class="tag">Bootstrap 5</span></div><div class="mlinks"><a href="https://youtu.be/uu2Y1UUP_vo" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div></div></div>
+<div class="moverlay" id="m4" onclick="closeM(this)"><div class="modal" onclick="event.stopPropagation()"><button class="mclose" onclick="closeM(document.getElementById('m4'))">&#x2715;</button><h2>📖 Holy Quran Rewards &amp; Auction</h2><div class="mst">Overview</div><p>A points-based reward system for Quran memorization with a live auction module. Students earn points through achievement milestones and bid on items using those points. Automated bidding runs via .NET Background Services with scheduled auction management and full Swagger documentation.</p><div class="mst">Key Features</div><p>Points accumulation · Live auctions with automated bidding · Background Services scheduling · Achievement tracking · Swagger API docs · Role-based access</p><div class="mst">Tech Stack</div><div class="ptags"><span class="tag">ASP.NET Core API</span><span class="tag">Background Services</span><span class="tag">EF Core</span><span class="tag">Auction Scheduling</span><span class="tag">Swagger</span><span class="tag">JWT Auth</span></div><div class="mlinks"><a href="https://github.com/ii20aya/Holy_quran.git" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div></div></div>
+<div class="moverlay" id="m5" onclick="closeM(this)"><div class="modal" onclick="event.stopPropagation()"><button class="mclose" onclick="closeM(document.getElementById('m5'))">&#x2715;</button><h2>📚 Online Bookstore E-Commerce</h2><div class="mst">Overview</div><p>A fully functional e-commerce API covering the complete shopping flow — from browsing and product management to cart, checkout, orders, and payments — with a full admin panel for inventory and order management.</p><div class="mst">Key Features</div><p>Product catalog management · Shopping cart &amp; wishlist · Order processing pipeline · Payment integration · Admin inventory panel · JWT authentication &amp; authorization</p><div class="mst">Tech Stack</div><div class="ptags"><span class="tag">ASP.NET Core API</span><span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">JWT Auth</span><span class="tag">Cart &amp; Orders</span><span class="tag">Admin Panel</span></div></div></div>
+<div class="moverlay" id="m6" onclick="closeM(this)"><div class="modal" onclick="event.stopPropagation()"><button class="mclose" onclick="closeM(document.getElementById('m6'))">&#x2715;</button><h2>🏥 Healthcare Appointment System</h2><div class="mst">Overview</div><p>A team-built, role-based healthcare platform (Patient, Doctor, Admin) enabling appointment booking, medical record management, prescriptions, and admin workflows with modular Angular architecture using Guards and Interceptors.</p><div class="mst">Key Features</div><p>Multi-role access · Appointment booking &amp; scheduling · Medical records &amp; prescriptions · Angular Guards &amp; Interceptors · Responsive Bootstrap UI · REST API integration</p><div class="mst">Tech Stack</div><div class="ptags"><span class="tag">Angular</span><span class="tag">json-server</span><span class="tag">RxJS</span><span class="tag">Reactive Forms</span><span class="tag">Guards</span><span class="tag">Interceptors</span><span class="tag">Bootstrap</span></div><div class="mlinks"><a href="https://youtu.be/5on8xilGMrg" class="btn btn-p" style="font-size:.85rem;padding:.65rem 1.4rem">🔗 View Demo</a></div></div></div>
 
 <hr class="div" />
 
-<!-- SKILLS -->
 <section id="skills">
   <div class="slabel reveal">Expertise</div>
   <h2 class="stitle reveal">Technical <em>Skills</em></h2>
   <div class="sgrid">
-    <div class="sgroup reveal">
-      <div class="sgh"><div class="sgicon blue2">⚙️</div><div class="sgt">Backend Development</div></div>
-      <div class="spills"><span class="spill">C#</span><span class="spill">ASP.NET Core</span><span class="spill">Web API</span><span class="spill">EF Core</span><span class="spill">LINQ</span><span class="spill">SignalR</span><span class="spill">JWT</span><span class="spill">Background Services</span><span class="spill">MVC</span><span class="spill">REST APIs</span></div>
-    </div>
-    <div class="sgroup reveal">
-      <div class="sgh"><div class="sgicon wine2">🎨</div><div class="sgt">Frontend Development</div></div>
-      <div class="spills"><span class="spill">Angular 20</span><span class="spill">TypeScript</span><span class="spill">RxJS</span><span class="spill">HTML5</span><span class="spill">CSS3</span><span class="spill">JavaScript</span><span class="spill">Bootstrap 5</span><span class="spill">Reactive Forms</span></div>
-    </div>
-    <div class="sgroup reveal">
-      <div class="sgh"><div class="sgicon purple">🗄️</div><div class="sgt">Databases</div></div>
-      <div class="spills"><span class="spill">SQL Server</span><span class="spill">Stored Procedures</span><span class="spill">Indexing</span><span class="spill">Triggers</span><span class="spill">MySQL</span><span class="spill">Firebase</span><span class="spill">DB Design</span></div>
-    </div>
-    <div class="sgroup reveal">
-      <div class="sgh"><div class="sgicon green2">🏗️</div><div class="sgt">Architecture &amp; Patterns</div></div>
-      <div class="spills"><span class="spill">Clean Architecture</span><span class="spill">SOLID</span><span class="spill">OOP</span><span class="spill">Design Patterns</span><span class="spill">DDD</span><span class="spill">Agile/Scrum</span></div>
-    </div>
-    <div class="sgroup reveal">
-      <div class="sgh"><div class="sgicon blue2">🛠️</div><div class="sgt">Tools &amp; Platforms</div></div>
-      <div class="spills"><span class="spill">Git/GitHub</span><span class="spill">Docker</span><span class="spill">CI/CD</span><span class="spill">Postman</span><span class="spill">Swagger</span><span class="spill">VS Code</span><span class="spill">Visual Studio</span></div>
-    </div>
-    <div class="sgroup reveal">
-      <div class="sgh"><div class="sgicon wine2">🔩</div><div class="sgt">Additional Expertise</div></div>
-      <div class="spills"><span class="spill">Rust</span><span class="spill">Raspberry Pi</span><span class="spill">ESP32</span><span class="spill">IoT Systems</span><span class="spill">Embedded C</span><span class="spill">MQTT</span></div>
-    </div>
+    <div class="sgroup reveal"><div class="sgh"><div class="sgicon blue2">⚙️</div><div class="sgt">Backend Development</div></div><div class="spills"><span class="spill">C#</span><span class="spill">ASP.NET Core</span><span class="spill">Web API</span><span class="spill">EF Core</span><span class="spill">LINQ</span><span class="spill">SignalR</span><span class="spill">JWT</span><span class="spill">Background Services</span><span class="spill">MVC</span><span class="spill">REST APIs</span></div></div>
+    <div class="sgroup reveal"><div class="sgh"><div class="sgicon wine2">🎨</div><div class="sgt">Frontend Development</div></div><div class="spills"><span class="spill">Angular 20</span><span class="spill">TypeScript</span><span class="spill">RxJS</span><span class="spill">HTML5</span><span class="spill">CSS3</span><span class="spill">JavaScript</span><span class="spill">Bootstrap 5</span><span class="spill">Reactive Forms</span></div></div>
+    <div class="sgroup reveal"><div class="sgh"><div class="sgicon purple">🗄️</div><div class="sgt">Databases</div></div><div class="spills"><span class="spill">SQL Server</span><span class="spill">Stored Procedures</span><span class="spill">Indexing</span><span class="spill">Triggers</span><span class="spill">MySQL</span><span class="spill">Firebase</span><span class="spill">DB Design</span></div></div>
+    <div class="sgroup reveal"><div class="sgh"><div class="sgicon green2">🏗️</div><div class="sgt">Architecture &amp; Patterns</div></div><div class="spills"><span class="spill">Clean Architecture</span><span class="spill">SOLID</span><span class="spill">OOP</span><span class="spill">Design Patterns</span><span class="spill">DDD</span><span class="spill">Agile/Scrum</span></div></div>
+    <div class="sgroup reveal"><div class="sgh"><div class="sgicon blue2">🛠️</div><div class="sgt">Tools &amp; Platforms</div></div><div class="spills"><span class="spill">Git/GitHub</span><span class="spill">Docker</span><span class="spill">CI/CD</span><span class="spill">Postman</span><span class="spill">Swagger</span><span class="spill">VS Code</span><span class="spill">Visual Studio</span></div></div>
+    <div class="sgroup reveal"><div class="sgh"><div class="sgicon wine2">🔩</div><div class="sgt">Additional Expertise</div></div><div class="spills"><span class="spill">Rust</span><span class="spill">Raspberry Pi</span><span class="spill">ESP32</span><span class="spill">IoT Systems</span><span class="spill">Embedded C</span><span class="spill">MQTT</span></div></div>
   </div>
 </section>
 
 <hr class="div" />
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="cinner">
     <div class="slabel reveal" style="justify-content:center">Let's Connect</div>
@@ -567,51 +443,22 @@
 <footer><p>Designed &amp; Built with <span>&#9829;</span> by Aya Abdulaziz &middot; 2026</p></footer>
 
 <script>
-  // Theme
   const html=document.documentElement,btn=document.getElementById('themeBtn');
   html.setAttribute('data-theme',localStorage.getItem('theme')||'light');
-  btn.addEventListener('click',()=>{
-    const n=html.getAttribute('data-theme')==='light'?'dark':'light';
-    html.setAttribute('data-theme',n);localStorage.setItem('theme',n);
-  });
-
-  // Scroll progress
+  btn.addEventListener('click',()=>{const n=html.getAttribute('data-theme')==='light'?'dark':'light';html.setAttribute('data-theme',n);localStorage.setItem('theme',n);});
   const sp=document.getElementById('sp');
   window.addEventListener('scroll',()=>{sp.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%'});
-
-  // Reveal
   const els=document.querySelectorAll('.reveal,.reveal-l,.reveal-r');
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        const el=e.target;
-        const sibs=[...el.parentElement.children].filter(c=>c.classList.contains('reveal')||c.classList.contains('reveal-l')||c.classList.contains('reveal-r'));
-        const idx=sibs.indexOf(el);
-        setTimeout(()=>el.classList.add('visible'),idx*90);
-        obs.unobserve(el);
-      }
-    });
-  },{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const el=e.target;const sibs=[...el.parentElement.children].filter(c=>c.classList.contains('reveal')||c.classList.contains('reveal-l')||c.classList.contains('reveal-r'));const idx=sibs.indexOf(el);setTimeout(()=>el.classList.add('visible'),idx*90);obs.unobserve(el);}});},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
   els.forEach(e=>obs.observe(e));
-
-  // Typewriter
   const roles=['Full Stack .NET Engineer','Angular Developer','ASP.NET Core Specialist','Clean Architecture Advocate','IoT & Embedded Engineer'];
   let ri=0,ci=0,typing=true;
   const tw=document.getElementById('tw');
-  function loop(){
-    const w=roles[ri];
-    if(typing){tw.textContent=w.slice(0,++ci);if(ci===w.length){typing=false;setTimeout(loop,2000);return;}}
-    else{tw.textContent=w.slice(0,--ci);if(ci===0){typing=true;ri=(ri+1)%roles.length;setTimeout(loop,300);return;}}
-    setTimeout(loop,typing?70:40);
-  }
+  function loop(){const w=roles[ri];if(typing){tw.textContent=w.slice(0,++ci);if(ci===w.length){typing=false;setTimeout(loop,2000);return;}}else{tw.textContent=w.slice(0,--ci);if(ci===0){typing=true;ri=(ri+1)%roles.length;setTimeout(loop,300);return;}}setTimeout(loop,typing?70:40);}
   setTimeout(loop,1200);
-
-  // Modals
   function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
   function closeM(el){el.classList.remove('open');document.body.style.overflow='';}
   document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.moverlay.open').forEach(m=>closeM(m));});
-
-  // Nav highlight
   const secs=document.querySelectorAll('section[id]');
   const navAs=document.querySelectorAll('.nav-links a');
   secs.forEach(s=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){navAs.forEach(a=>a.style.color='');const l=document.querySelector('.nav-links a[href="#'+e.target.id+'"]');if(l)l.style.color='var(--wine)';}});},{threshold:.4}).observe(s));
